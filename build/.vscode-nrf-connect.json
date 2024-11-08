@@ -1,0 +1,14 @@
+{
+  "board": "nrf52833dk/nrf52833",
+  "boardRevision": "",
+  "boardDir": "c:/ncs/v2.7.0/zephyr/boards/nordic/nrf52833dk",
+  "shouldBuild": true,
+  "optimizations": "none",
+  "cmakeArgs": [],
+  "confFiles": [],
+  "buildDirectory": "build",
+  "kconfigFragments": [],
+  "snippets": [],
+  "dtcOverlays": [],
+  "extraDtcOverlays": []
+}
