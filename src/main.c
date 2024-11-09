@@ -446,6 +446,8 @@ static uint8_t hogp_notify_cb(
         dk_set_led(DK_LED2, 0);
         dk_set_led(DK_LED3, 0);
         dk_set_led(DK_LED4, 0);
+    }else if (data[0] == 0x11 && data[1] == 0x10 && data[2] == 0x01) {
+        printk("Starting Distence Measurement\n");
     }else{
         printk("%x %x %x\n", data[0], data[1], data[2]);
     }
