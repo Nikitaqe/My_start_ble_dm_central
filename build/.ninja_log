@@ -1662,3 +1662,7 @@
 1196	2230	7529383751145101	C:/Users/User/workspace/My_start_ble_dm_central/build/zephyr/zephyr.hex	2f8ad91c72d0027e
 1196	2230	7529383751145101	C:/Users/User/workspace/My_start_ble_dm_central/build/zephyr/zephyr.bin	2f8ad91c72d0027e
 1196	2230	7529383751145101	C:/Users/User/workspace/My_start_ble_dm_central/build/zephyr/zephyr.stat	2f8ad91c72d0027e
+33	134	7529925101654241	zephyr/include/generated/ncs_commit.h	42fb2adb9b3acd7a
+33	134	7529925101654241	C:/Users/User/workspace/My_start_ble_dm_central/build/zephyr/include/generated/ncs_commit.h	42fb2adb9b3acd7a
+38	134	7529925102754247	zephyr/include/generated/zephyr_commit.h	858818e83947f338
+38	134	7529925102754247	C:/Users/User/workspace/My_start_ble_dm_central/build/zephyr/include/generated/zephyr_commit.h	858818e83947f338
