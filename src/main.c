@@ -69,7 +69,7 @@ bool led1 = false;
 bool led2 = false;
 bool led3 = false;
 bool led4 = false;
-int addr1[6] = {0};
+int addr12[6] = {0};
 
 // Функция обратного вызова, которая будет вызвана, когда устройство обнаружит другое устройство по BLE и фильтры совпадения будут удовлетворены
 static void scan_filter_match(
@@ -330,12 +330,9 @@ static void connected(struct bt_conn *conn, uint8_t conn_err)
     // Выводим сообщение о успешном подключении
     printk("Connected: %s\n", addr);
 
-    
-    printk("%u + %u\n",  addr[0], addr[1]);
     int j = 0;
     for(int i = 0; i < 6; i++) {
-        addr1[i] = ((change(addr[j])<<4)) | (change(addr[j + 1]));
-        printk("%x = %x + %x\n", addr1[i], (change(addr[j])<<4) , change(addr[j + 1]));
+        addr12[i] = ((change(addr[j])<<4)) | (change(addr[j + 1]));
         j+=3;
     }
     
