@@ -800,20 +800,25 @@ static void num_comp_reply(bool accept)
 static void button_handler(uint32_t button_state, uint32_t has_changed)
 {
     uint32_t button = button_state & has_changed;
-
-    // Если есть соединение для парирования
+    
     if (auth_conn) {
-        // Если кнопка "Принять", выполняем подтверждение парирования
-        if (button & KEY_PAIRING_ACCEPT) {
-            num_comp_reply(true);
-        }
-
-        // Если кнопка "Отклонить", выполняем отклонение парирования
-        if (button & KEY_PAIRING_REJECT) {
-            num_comp_reply(false);
-        }
+        num_comp_reply(true);
         return;
     }
+
+    // Если есть соединение для парирования
+    // if (auth_conn) {
+    //     // Если кнопка "Принять", выполняем подтверждение парирования
+    //     if (button & KEY_PAIRING_ACCEPT) {
+    //         num_comp_reply(true);
+    //     }
+
+    //     // Если кнопка "Отклонить", выполняем отклонение парирования
+    //     if (button & KEY_PAIRING_REJECT) {
+    //         num_comp_reply(false);
+    //     }
+    //     return;
+    // }
     // Если кнопка "Переключить режим загрузки", выполняем переключение режима загрузки
     if (button & KEY_BOOTMODE_MASK) {
         button_bootmode();
@@ -832,7 +837,7 @@ static void button_handler(uint32_t button_state, uint32_t has_changed)
 
 
 // Функция отображения пароля для парирования устройства Bluetooth
-static void auth_passkey_display(struct bt_conn *conn, unsigned int passkey)
+static void auth_passkey_display(struct bt_conn *conn, unsigned int passkey)    
 {
     char addr[BT_ADDR_LE_STR_LEN];
 
