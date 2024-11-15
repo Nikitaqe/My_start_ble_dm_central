@@ -71,6 +71,7 @@ bool led2 = false;
 bool led3 = false;
 bool led4 = false;
 int addr12[6] = {0};
+struct bt_conn *conn_local;
 
 // Функция обратного вызова, которая будет вызвана, когда устройство обнаружит другое устройство по BLE и фильтры совпадения будут удовлетворены
 static void scan_filter_match(
@@ -301,6 +302,7 @@ static void connected(struct bt_conn *conn, uint8_t conn_err)
     // Объявляем переменные для хранения ошибки и адреса устройства
     int err;
     char addr[BT_ADDR_LE_STR_LEN];
+    conn_local = conn;
 
     // Преобразуем адрес устройства в строку
     bt_addr_le_to_str(bt_conn_get_dst(conn), addr, sizeof(addr));
@@ -957,10 +959,23 @@ int main(void)
     // Возвращаем 0, чтобы указать на успех
     return 0;
 }
+
 void test_run_cmd(void){
-    printk("test run\n");
+    printk("BLE off\n");
+    //bt_conn_disconnect(conn_local, BT_HCI_ERR_REMOTE_USER_TERM_CONN);
+    bt_disable();
 }
 
-SHELL_CMD_REGISTER(run, NULL, "Run the test", test_run_cmd);
+void test_run_on(void){
+    printk("BLE on\n");
+    // Включение модуля BLE
+    bt_enable(NULL);
+
+    // Инициализация модуля BLE
+    bt_init();
+}
+
+SHELL_CMD_REGISTER(off_ble, NULL, "Run the test", test_run_cmd);
+SHELL_CMD_REGISTER(on_ble, NULL, "Run the test", test_run_on);
 SHELL_CMD_REGISTER(on, NULL, "Run the test", led_on);
 SHELL_CMD_REGISTER(off, NULL, "Run the test", led_off);
