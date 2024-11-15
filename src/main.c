@@ -806,19 +806,6 @@ static void button_handler(uint32_t button_state, uint32_t has_changed)
         return;
     }
 
-    // Если есть соединение для парирования
-    // if (auth_conn) {
-    //     // Если кнопка "Принять", выполняем подтверждение парирования
-    //     if (button & KEY_PAIRING_ACCEPT) {
-    //         num_comp_reply(true);
-    //     }
-
-    //     // Если кнопка "Отклонить", выполняем отклонение парирования
-    //     if (button & KEY_PAIRING_REJECT) {
-    //         num_comp_reply(false);
-    //     }
-    //     return;
-    // }
     // Если кнопка "Переключить режим загрузки", выполняем переключение режима загрузки
     if (button & KEY_BOOTMODE_MASK) {
         button_bootmode();
@@ -836,49 +823,6 @@ static void button_handler(uint32_t button_state, uint32_t has_changed)
 }
 
 
-// Функция отображения пароля для парирования устройства Bluetooth
-static void auth_passkey_display(struct bt_conn *conn, unsigned int passkey)    
-{
-    char addr[BT_ADDR_LE_STR_LEN];
-
-    // Преобразуем адрес устройства в строковое представление
-    bt_addr_le_to_str(bt_conn_get_dst(conn), addr, sizeof(addr));
-
-    // Выводим пароль для парирования устройства
-    printk("Passkey for %s: %06u\n", addr, passkey);
-}
-
-
-// Функция подтверждения пароля для парирования устройства Bluetooth
-static void auth_passkey_confirm(struct bt_conn *conn, unsigned int passkey)
-{
-    char addr[BT_ADDR_LE_STR_LEN];
-
-    // Создаем ссылку на соединение
-    auth_conn = bt_conn_ref(conn);
-
-    // Преобразуем адрес устройства в строковое представление
-    bt_addr_le_to_str(bt_conn_get_dst(conn), addr, sizeof(addr));
-
-    // Выводим пароль для парирования устройства
-    printk("Passkey for %s: %06u\n", addr, passkey);
-
-    // Запрашиваем подтверждение пользователя
-    printk("Press Button 1 to confirm, Button 2 to reject.\n");
-}
-
-
-// Функция обработки отмены парирования устройства Bluetooth
-static void auth_cancel(struct bt_conn *conn)
-{
-    char addr[BT_ADDR_LE_STR_LEN];
-
-    // Преобразуем адрес устройства в строковое представление
-    bt_addr_le_to_str(bt_conn_get_dst(conn), addr, sizeof(addr));
-
-    // Выводим сообщение об отмене парирования
-    printk("Pairing cancelled: %s\n", addr);
-}
 
 
 // Функция обработки завершения процесса парирования устройства Bluetooth
@@ -906,11 +850,6 @@ static void pairing_failed(struct bt_conn *conn, enum bt_security_err reason)
     printk("Pairing failed conn: %s, reason %d\n", addr, reason);
 }
 
-static struct bt_conn_auth_cb conn_auth_callbacks = {
-	.passkey_display = auth_passkey_display,
-	.passkey_confirm = auth_passkey_confirm,
-	.cancel = auth_cancel,
-};
 
 static struct bt_conn_auth_info_cb conn_auth_info_callbacks = {
 	.pairing_complete = pairing_complete,
@@ -965,16 +904,6 @@ int main(void)
     // hogp - структура, содержащая параметры инициализации
     // hogp_init_params - структура, содержащая параметры инициализации
     bt_hogp_init(&hogp, &hogp_init_params);
-
-    // Регистрируем обратные вызовы для авторизации соединения
-    // conn_auth_callbacks - структура, содержащая функции обратных вызовов
-    err = bt_conn_auth_cb_register(&conn_auth_callbacks);
-    if (err) {
-        // Если регистрация обратных вызовов не удалась, выводим сообщение об ошибке
-        printk("failed to register authorization callbacks.\n");
-        // Возвращаем 0, чтобы указать на ошибку
-        return 0;
-    }
 
     // Регистрируем обратные вызовы для авторизации информации о соединении
     // conn_auth_info_callbacks - структура, содержащая функции обратных вызовов
