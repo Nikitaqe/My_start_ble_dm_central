@@ -556,8 +556,7 @@ static void hogp_ready_cb(struct bt_hogp *hogp)
 }
 
 // Обработчик события "HIDS готов к работе"
-static void hids_on_ready(struct k_work *work)/*переписать так, чтобы происходила обработка приходящих данных,
-                                                но так чтобы при получении сигнала что-нибудь выводилось*/
+static void hids_on_ready(struct k_work *work)
 {
     // Код ошибки
     int err;
