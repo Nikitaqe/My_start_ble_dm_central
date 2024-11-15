@@ -1,6 +1,7 @@
 {
     "files.associations": {
         "scan.h": "c",
-        "hogp.h": "c"
+        "hogp.h": "c",
+        "gatt.h": "c"
     }
 }

@@ -880,14 +880,6 @@ int main(void)
         return -1;
     }
 
-/*
-    // Инициализация узла связи
-    err = peer_init();
-    if (err) {
-        printk("Peer init failed (err %d)\n", err);
-        return 0;
-    }
-*/
     // Установка параметров инициализации модуля дистанционного управления
     init_param.cb = &dm_cb;
 
@@ -962,18 +954,15 @@ int main(void)
 
 void test_run_cmd(void){
     printk("BLE off\n");
-    //bt_conn_disconnect(conn_local, BT_HCI_ERR_REMOTE_USER_TERM_CONN);
     bt_disable();
 }
 
 void test_run_on(void){
-    printk("BLE on\n");
-    // Включение модуля BLE
+    printk("BLE on\n"); 
+    bt_conn_unref(auth_conn);
     bt_enable(NULL);
-
-    // Инициализация модуля BLE
-    bt_init();
 }
+
 
 SHELL_CMD_REGISTER(off_ble, NULL, "Run the test", test_run_cmd);
 SHELL_CMD_REGISTER(on_ble, NULL, "Run the test", test_run_on);
