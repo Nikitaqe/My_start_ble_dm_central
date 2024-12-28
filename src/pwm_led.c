@@ -5,11 +5,12 @@
  */
 
 #include "pwm_led.h"
+
 #include <nrfx.h>
 #include <nrfx_gpiote.h>
 #include <zephyr/drivers/pwm.h>
 
-#define PWM_LED0_NODE	DT_ALIAS(pwm_led0)
+#define PWM_LED0_NODE DT_ALIAS(pwm_led0)
 
 #if DT_NODE_HAS_STATUS(PWM_LED0_NODE, okay)
 static const struct pwm_dt_spec led0 = PWM_DT_SPEC_GET(PWM_LED0_NODE);
@@ -17,21 +18,19 @@ static const struct pwm_dt_spec led0 = PWM_DT_SPEC_GET(PWM_LED0_NODE);
 #error "Unsupported board: pwm-led0 devicetree alias is not defined"
 #endif
 
-#define PWM_PERIOD	1024
-#define LIGHTNESS_MAX	UINT16_MAX
+#define PWM_PERIOD 1024
+#define LIGHTNESS_MAX UINT16_MAX
 
-int pwm_led_init(void)
-{
-	if (!device_is_ready(led0.dev)) {
-		return -1;
-	}
+int pwm_led_init(void) {
+    if (!device_is_ready(led0.dev)) {
+        return -1;
+    }
 
-	return 0;
+    return 0;
 }
 
-void pwm_led_set(uint16_t desired_lvl)
-{
-	uint32_t scaled_lvl = (PWM_PERIOD * desired_lvl) / LIGHTNESS_MAX;
+void pwm_led_set(uint16_t desired_lvl) {
+    uint32_t scaled_lvl = (PWM_PERIOD * desired_lvl) / LIGHTNESS_MAX;
 
-	pwm_set_dt(&led0, PWM_USEC(PWM_PERIOD), PWM_USEC(scaled_lvl));
+    pwm_set_dt(&led0, PWM_USEC(PWM_PERIOD), PWM_USEC(scaled_lvl));
 }
